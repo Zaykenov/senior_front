@@ -34,7 +34,7 @@ const Login = () => {
       }
       
       // Redirect to dashboard after successful login
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed. Please try again.');
     } finally {

@@ -1,43 +1,65 @@
 .dashboard-container {
-  width: 100%;
-  min-height: calc(100vh - 72px);
-  padding: 40px;
-  box-sizing: border-box;
+  padding: 24px;
+  background: #fff;
+  min-height: calc(100vh - 64px - 200px); /* Subtract header and footer heights */
+}
+
+.dashboard-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 24px;
 }
 
-.dashboard-content {
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #1a1a1a;
 }
 
-.dashboard-title {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: #333;
+/* Table styles */
+.ant-table-wrapper {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
-.dashboard-text {
-  font-size: 1.1rem;
-  color: #666;
-  margin-bottom: 2rem;
+.ant-table-thead > tr > th {
+  background: #fafafa;
+  font-weight: 600;
 }
 
-.dashboard-button {
-  display: inline-block;
-  background-color: #E6B83C;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s;
+/* Modal styles */
+.ant-modal-content {
+  border-radius: 8px;
 }
 
-.dashboard-button:hover {
-  background-color: #D6A82C;
+.ant-modal-header {
+  border-radius: 8px 8px 0 0;
+}
+
+.ant-form-item-label > label {
+  font-weight: 500;
+}
+
+/* Button styles */
+.ant-btn-primary {
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+.ant-btn-primary:hover {
+  background: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.ant-btn-dangerous {
+  color: #ff4d4f;
+  border-color: #ff4d4f;
+}
+
+.ant-btn-dangerous:hover {
+  color: #fff;
+  background: #ff4d4f;
+  border-color: #ff4d4f;
 } 
