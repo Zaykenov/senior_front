@@ -1,14 +1,12 @@
 .auth-container {
   display: flex;
   justify-content: center;
-  /* align-items: center;        <-- remove this if you don’t want strict vertical centering */
-  align-items: flex-start;       /* optional: place card near top instead of perfectly center */
-  width: 95vw;
-  min-height: 100vh;             /* use min-height instead of fixed 100vh or remove completely */
+  align-items: center;
+  min-height: calc(100vh - 72px); /* Account for navbar */
   background-color: #f5f5f5;
-  padding: 40px 20px;
+  padding: 20px;
+  width: 100%;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 .auth-card {

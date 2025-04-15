@@ -55,29 +55,6 @@ yarn build
 
 This will create a `dist` directory with the production build.
 
-## Project Structure
-
-```
-├── src/
-│   ├── assets/
-│   │   └── images/
-│   │       └── logo.svg
-│   ├── components/
-│   ├── pages/
-│   │   ├── Login.tsx
-│   │   ├── Register.tsx
-│   │   └── ForgotPassword.tsx
-│   ├── services/
-│   │   └── api.ts
-│   ├── styles/
-│   │   └── Auth.css
-│   ├── App.tsx
-│   ├── main.tsx
-│   └── index.css
-├── package.json
-└── README.md
-```
-
 ## API Integration
 
 The project is set up to connect to a backend API. You'll need to update the API URL in `src/services/api.ts` to point to your actual backend server.
