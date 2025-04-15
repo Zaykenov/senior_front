@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../services/api';
 import '../styles/Auth.css';
-import logo from '../assets/images/logo.svg';
+import logo from '../assets/images/nu_logo.png';
 
 const Register = () => {
   const [name, setName] = useState('');
