@@ -98,15 +98,18 @@ const Dashboard = () => {
           links.forEach((link: string, index: number) => {
             formData.append(`social_links[${index}]`, link.trim());
           });
-        } else if (key === 'profile_photo' && values[key]?.fileList?.[0]) {
+        } else if (key === 'profile_photo') {
           // Handle file upload
-          formData.append('profile_photo', values[key].fileList[0].originFileObj);
+          if (values[key]?.fileList?.[0]?.originFileObj) {
+            formData.append('profile_photo', values[key].fileList[0].originFileObj);
+          }
         } else if (values[key] != null) {
           formData.append(key, values[key]);
         }
       });
 
       if (editingAlumni) {
+        // For update, we need to use multipart/form-data
         await axios.put(`http://85.202.192.67/api/alumni/${editingAlumni.id}`, formData, {
           headers: {
             'Accept': 'application/json',
@@ -116,6 +119,7 @@ const Dashboard = () => {
         });
         message.success('Alumni updated successfully');
       } else {
+        // For create, we also use multipart/form-data
         await axios.post('http://85.202.192.67/api/alumni', formData, {
           headers: {
             'Accept': 'application/json',
@@ -128,7 +132,11 @@ const Dashboard = () => {
       setModalVisible(false);
       fetchAlumni();
     } catch (error) {
-      message.error('Failed to save alumni data');
+      if (axios.isAxiosError(error) && error.response) {
+        message.error(error.response.data.message || 'Failed to save alumni data');
+      } else {
+        message.error('Failed to save alumni data');
+      }
     }
   };
 
