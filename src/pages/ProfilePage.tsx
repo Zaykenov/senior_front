@@ -3,25 +3,20 @@ import axios from 'axios';
 import { Card, Avatar, Typography, Skeleton, Tag, List } from 'antd';
 import { UserOutlined, KeyOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 
-interface Role {
-  id: number;
-  name: string;
-}
 
-interface Permission {
-  id: number;
-  name: string;
-}
-
-interface ProfileData {
+interface UserData {
   id: number;
   name: string;
   email: string;
   email_verified_at: string | null;
   created_at: string;
   updated_at: string;
-  roles: Role[];
-  permissions: Permission[];
+}
+
+interface ProfileData {
+  user: UserData;
+  roles: string[];
+  permissions: string[];
 }
 
 const ProfilePage = () => {
@@ -74,10 +69,10 @@ const ProfilePage = () => {
             style={{ backgroundColor: '#1890ff' }}
           />
           <Typography.Title level={2} style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>
-            {loading ? <Skeleton.Input style={{ width: 200 }} active size="small" /> : profile?.name}
+            {loading ? <Skeleton.Input style={{ width: 200 }} active size="small" /> : profile?.user.name}
           </Typography.Title>
           <Typography.Text type="secondary">
-            {profile?.email}
+            {profile?.user.email}
           </Typography.Text>
         </div>
 
@@ -85,18 +80,20 @@ const ProfilePage = () => {
           itemLayout="horizontal"
           dataSource={[
             {
+              key: 'roles',
               title: 'Roles',
               icon: <KeyOutlined style={{ fontSize: '24px', color: '#1890ff' }} />,
               content: profile?.roles
             },
             {
+              key: 'permissions',
               title: 'Permissions',
               icon: <SafetyCertificateOutlined style={{ fontSize: '24px', color: '#52c41a' }} />,
               content: profile?.permissions
             }
           ]}
           renderItem={(item) => (
-            <List.Item>
+            <List.Item key={item.key}>
               <Card
                 style={{
                   width: '100%',
@@ -113,11 +110,15 @@ const ProfilePage = () => {
                         <Skeleton.Input style={{ width: 300 }} active size="small" />
                       ) : (
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                          {Array.isArray(item.content) && item.content.map((entry: Role | Permission) => (
-                            <Tag key={entry.id} color="blue">
-                              {entry.name}
-                            </Tag>
-                          ))}
+                          {Array.isArray(item.content) && item.content.length > 0 ? (
+                            item.content.map((val: string) => (
+                              <Tag color={item.key === 'roles' ? 'blue' : 'green'} key={val}>
+                                {val}
+                              </Tag>
+                            ))
+                          ) : (
+                            <Typography.Text type="secondary">No {item.title.toLowerCase()}</Typography.Text>
+                          )}
                         </div>
                       )}
                     </div>
