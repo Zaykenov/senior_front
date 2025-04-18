@@ -4,6 +4,7 @@ import { EditOutlined, DeleteOutlined, PlusOutlined, UploadOutlined } from '@ant
 import axios from 'axios';
 import api from '../services/api.ts';
 import '../styles/Dashboard.css';
+import { useTranslation } from 'react-i18next';
 
 interface AlumniData {
   id: string;
@@ -34,6 +35,7 @@ const Dashboard = () => {
   const [editingAlumni, setEditingAlumni] = useState<AlumniData | null>(null);
   const [form] = Form.useForm();
   const [search, setSearch] = useState('');
+  const { t } = useTranslation();
 
   // Debounce search input
   useEffect(() => {
@@ -53,7 +55,7 @@ const Dashboard = () => {
       );
       setAlumni(response.data.data);
     } catch (error) {
-      message.error('Failed to fetch alumni data');
+      message.error(t('fetch_alumni_error'));
     } finally {
       setLoading(false);
     }
@@ -85,10 +87,10 @@ const Dashboard = () => {
           'Accept': 'application/json',
         }
       });
-      message.success('Alumni deleted successfully');
+      message.success(t('alumni_deleted'));
       fetchAlumni();
     } catch (error) {
-      message.error('Failed to delete alumni');
+      message.error(t('delete_alumni_error'));
     }
   };
 
@@ -126,7 +128,7 @@ const Dashboard = () => {
             'Content-Type': 'multipart/form-data',
           }
         });
-        message.success('Alumni updated successfully');
+        message.success(t('alumni_updated'));
       } else {
         // For create, we also use multipart/form-data
         await api.post('http://85.202.192.67/api/alumni', formData, {
@@ -135,33 +137,33 @@ const Dashboard = () => {
             'Content-Type': 'multipart/form-data',
           }
         });
-        message.success('Alumni created successfully');
+        message.success(t('alumni_created'));
       }
       setModalVisible(false);
       fetchAlumni();
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        message.error(error.response.data.message || 'Failed to save alumni data');
+        message.error(error.response.data.message || t('save_alumni_error'));
       } else {
-        message.error('Failed to save alumni data');
+        message.error(t('save_alumni_error'));
       }
     }
   };
 
   const columns = [
     {
-      title: 'Full Name',
+      title: t('full_name'),
       dataIndex: 'full_name',
       key: 'full_name',
       sorter: (a: AlumniData, b: AlumniData) => a.full_name.localeCompare(b.full_name),
     },
     {
-      title: 'Email',
+      title: t('email'),
       dataIndex: 'email',
       key: 'email',
     },
     {
-      title: 'Degree',
+      title: t('degree'),
       dataIndex: 'degree',
       key: 'degree',
       filters: Array.from(new Set(alumni.map(a => a.degree))).map(degree => ({
@@ -171,17 +173,17 @@ const Dashboard = () => {
       onFilter: (value: any, record: AlumniData) => record.degree === value,
     },
     {
-      title: 'Faculty',
+      title: t('faculty'),
       dataIndex: 'faculty',
       key: 'faculty',
     },
     {
-      title: 'Major',
+      title: t('major'),
       dataIndex: 'major',
       key: 'major',
     },
     {
-      title: 'Actions',
+      title: t('actions'),
       key: 'actions',
       render: (_: any, record: AlumniData) => (
         <Space>
@@ -190,14 +192,14 @@ const Dashboard = () => {
             icon={<EditOutlined />}
             onClick={() => handleEdit(record)}
           >
-            Edit
+            {t('edit_alumni')}
           </Button>
           <Button
             danger
             icon={<DeleteOutlined />}
             onClick={() => handleDelete(record.id)}
           >
-            Delete
+            {t('delete')}
           </Button>
         </Space>
       ),
@@ -207,14 +209,14 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
-        <h1>Alumni Management</h1>
+        <h1>{t('alumni_management')}</h1>
         <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
-          Add Alumni
+          {t('add_alumni')}
         </Button>
       </div>
       <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'flex-start' }}>
         <Input.Search
-          placeholder="Search by name or email"
+          placeholder={t('search_placeholder')}
           allowClear
           value={search}
           onChange={e => setSearch(e.target.value)}
@@ -230,12 +232,12 @@ const Dashboard = () => {
         pagination={{
           pageSize: 10,
           showSizeChanger: true,
-          showTotal: (total) => `Total ${total} alumni`,
+          showTotal: (total) => t('total_alumni', { count: total }),
         }}
       />
 
       <Modal
-        title={editingAlumni ? 'Edit Alumni' : 'Add Alumni'}
+        title={editingAlumni ? t('edit_alumni') : t('add_alumni')}
         open={modalVisible}
         onOk={handleModalOk}
         onCancel={() => setModalVisible(false)}
@@ -247,122 +249,122 @@ const Dashboard = () => {
         >
           <Form.Item
             name="first_name"
-            label="First Name"
+            label={t('first_name')}
             rules={[
               { required: true },
-              { max: 255, message: 'First name cannot exceed 255 characters' }
+              { max: 255, message: t('first_name_max') }
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="last_name"
-            label="Last Name"
+            label={t('last_name')}
             rules={[
               { required: true },
-              { max: 255, message: 'Last name cannot exceed 255 characters' }
+              { max: 255, message: t('last_name_max') }
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="email"
-            label="Email"
+            label={t('email')}
             rules={[
               { required: true, type: 'email' },
-              { max: 255, message: 'Email cannot exceed 255 characters' }
+              { max: 255, message: t('email_max') }
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="graduation_date"
-            label="Graduation Date"
+            label={t('graduation_date')}
             rules={[{ required: true }]}
           >
             <Input type="date" />
           </Form.Item>
           <Form.Item
             name="degree"
-            label="Degree"
+            label={t('degree')}
             rules={[
               { required: true },
-              { max: 255, message: 'Degree cannot exceed 255 characters' }
+              { max: 255, message: t('degree_max') }
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="faculty"
-            label="Faculty"
+            label={t('faculty')}
             rules={[
               { required: true },
-              { max: 255, message: 'Faculty cannot exceed 255 characters' }
+              { max: 255, message: t('faculty_max') }
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="major"
-            label="Major"
-            rules={[{ max: 255, message: 'Major cannot exceed 255 characters' }]}
+            label={t('major')}
+            rules={[{ max: 255, message: t('major_max') }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="phone"
-            label="Phone"
-            rules={[{ max: 20, message: 'Phone number cannot exceed 20 characters' }]}
+            label={t('phone')}
+            rules={[{ max: 20, message: t('phone_max') }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="current_job"
-            label="Current Job"
-            rules={[{ max: 255, message: 'Current job cannot exceed 255 characters' }]}
+            label={t('current_job')}
+            rules={[{ max: 255, message: t('current_job_max') }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="company"
-            label="Company"
-            rules={[{ max: 255, message: 'Company name cannot exceed 255 characters' }]}
+            label={t('company')}
+            rules={[{ max: 255, message: t('company_max') }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="country"
-            label="Country"
-            rules={[{ max: 100, message: 'Country name cannot exceed 100 characters' }]}
+            label={t('country')}
+            rules={[{ max: 100, message: t('country_max') }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="city"
-            label="City"
-            rules={[{ max: 100, message: 'City name cannot exceed 100 characters' }]}
+            label={t('city')}
+            rules={[{ max: 100, message: t('city_max') }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="biography"
-            label="Biography"
+            label={t('biography')}
           >
             <Input.TextArea rows={4} />
           </Form.Item>
           <Form.Item
             name="social_links"
-            label="Social Links"
-            help="Enter one link per line"
+            label={t('social_links')}
+            help={t('social_links_help')}
           >
             <Input.TextArea 
               rows={2} 
-              placeholder="Enter social media links (one per line)"
+              placeholder={t('social_links_placeholder')}
             />
           </Form.Item>
           <Form.Item
             name="profile_photo"
-            label="Profile Photo"
+            label={t('profile_photo')}
             valuePropName="file"
           >
             <Upload
@@ -370,7 +372,7 @@ const Dashboard = () => {
               beforeUpload={() => false}
               accept="image/*"
             >
-              <Button icon={<UploadOutlined />}>Select Photo</Button>
+              <Button icon={<UploadOutlined />}>{t('select_photo')}</Button>
             </Upload>
           </Form.Item>
         </Form>

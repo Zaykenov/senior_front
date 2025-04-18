@@ -7,6 +7,7 @@ import ProfilePage from './pages/ProfilePage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './styles/Auth.css';
+import './i18n';
 
 function App() {
   return (

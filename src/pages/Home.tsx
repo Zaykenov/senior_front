@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../styles/Home.css';
+import { useTranslation } from 'react-i18next';
 
 // Icons for feature cards
 const NetworkIcon = () => <div className="feature-icon">👥</div>;
@@ -7,42 +8,43 @@ const EventsIcon = () => <div className="feature-icon">🎉</div>;
 const ResourcesIcon = () => <div className="feature-icon">📚</div>;
 
 const Home = () => {
+  const { t } = useTranslation();
   return (
     <div className="home-container">
       <main className="home-main">
         <div className="home-content">
-          <h1 className="home-title">NU Alumni Management System</h1>
-          <p className="home-subtitle">A place for socializing, networking, and growing your professional connections</p>
+          <h1 className="home-title">{t('alumni_management')}</h1>
+          <p className="home-subtitle">{t('home_subtitle')}</p>
           
           <div className="cards-container">
             <div className="feature-card">
               <NetworkIcon />
-              <h3 className="feature-title">Connect & Network</h3>
+              <h3 className="feature-title">{t('connect_network_title')}</h3>
               <p className="feature-description">
-                Connect with fellow alumni, build valuable relationships and expand your professional network.
+                {t('connect_network_desc')}
               </p>
             </div>
             
             <div className="feature-card">
               <EventsIcon />
-              <h3 className="feature-title">Events & Meetups</h3>
+              <h3 className="feature-title">{t('events_meetups_title')}</h3>
               <p className="feature-description">
-                Discover and participate in exclusive alumni events, reunions, and professional gatherings.
+                {t('events_meetups_desc')}
               </p>
             </div>
             
             <div className="feature-card">
               <ResourcesIcon />
-              <h3 className="feature-title">Resources & Support</h3>
+              <h3 className="feature-title">{t('resources_support_title')}</h3>
               <p className="feature-description">
-                Access career resources, mentorship programs, and continuous learning opportunities.
+                {t('resources_support_desc')}
               </p>
             </div>
           </div>
           
           <div className="cta-section">
             <Link to="/dashboard" className="cta-button">
-              Learn More
+              {t('learn_more')}
             </Link>
           </div>
         </div>

@@ -14,8 +14,11 @@
     "antd": "^5.15.0",
     "axios": "^1.8.4",
     "axios-cache-interceptor": "^1.7.0",
+    "i18next": "^25.0.0",
+    "i18next-browser-languagedetector": "^8.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.1",
     "react-router-dom": "^7.5.0"
   },
   "devDependencies": {

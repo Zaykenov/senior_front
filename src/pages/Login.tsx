@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../services/api';
 import '../styles/Auth.css';
 import logo from '../assets/images/nu_logo.png';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +51,7 @@ const Login = () => {
           <img src={logo} alt="Logo" className="logo" />
         </div>
         
-        <h1 className="auth-title">Login</h1>
+        <h1 className="auth-title">{t('login_title')}</h1>
         
         {error && <div className="error-message">{error}</div>}
         
@@ -62,7 +64,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
+              placeholder={t('email')}
               required
               maxLength={255}
             />
@@ -76,7 +78,7 @@ const Login = () => {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+              placeholder={t('password')}
               required
             />
             <button 
@@ -93,14 +95,14 @@ const Login = () => {
             className="auth-button"
             disabled={loading}
           >
-            {loading ? 'Signing in...' : 'Sign in'}
+            {loading ? t('signing_in') : t('sign_in')}
           </button>
         </form>
         
         <div className="auth-footer">
-          <span>Don't have an account?</span>
+          <span>{t('no_account')}</span>
           <Link to="/register" className="signup-link">
-            Sign up
+            {t('sign_up')}
           </Link>
         </div>
       </div>

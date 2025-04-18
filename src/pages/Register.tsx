@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../services/api';
 import '../styles/Auth.css';
 import logo from '../assets/images/nu_logo.png';
+import { useTranslation } from 'react-i18next';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -15,6 +16,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +51,7 @@ const Register = () => {
           <img src={logo} alt="Logo" className="logo" />
         </div>
         
-        <h1 className="auth-title">Create your Account</h1>
+        <h1 className="auth-title">{t('register_title')}</h1>
         
         {error && <div className="error-message">{error}</div>}
         
@@ -62,7 +64,7 @@ const Register = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Full Name"
+              placeholder={t('full_name')}
               required
               maxLength={255}
             />
@@ -76,7 +78,7 @@ const Register = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
+              placeholder={t('email')}
               required
               maxLength={255}
             />
@@ -90,7 +92,7 @@ const Register = () => {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+              placeholder={t('password')}
               required
               minLength={8}
             />
@@ -111,7 +113,7 @@ const Register = () => {
               type={showPasswordConfirm ? "text" : "password"}
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
-              placeholder="Confirm Password"
+              placeholder={t('confirm_password')}
               required
               minLength={8}
             />
@@ -129,14 +131,14 @@ const Register = () => {
             className="auth-button"
             disabled={loading}
           >
-            {loading ? 'Signing up...' : 'Sign up'}
+            {loading ? t('signing_up') : t('sign_up')}
           </button>
         </form>
         
         <div className="auth-footer">
-          <span>Already have an account?</span>
+          <span>{t('have_account')}</span>
           <Link to="/login" className="signup-link">
-            Sign in
+            {t('sign_in')}
           </Link>
         </div>
       </div>
