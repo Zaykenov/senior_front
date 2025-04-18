@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Card, Avatar, Typography, Skeleton, Tag, List } from 'antd';
 import { UserOutlined, KeyOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
+import api from '../services/api.ts';
 
 
 interface UserData {
@@ -27,7 +27,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://85.202.192.67/api/profile', {
+        const response = await api.get('http://85.202.192.67/api/profile', {
           headers: {
             'Accept': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`

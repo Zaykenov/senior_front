@@ -1,15 +1,18 @@
 import axios from 'axios';
+import { setupCache } from 'axios-cache-interceptor';
 
 const API_URL = 'http://85.202.192.67/api'; // As per API docs
 
 // Create axios instance
-const api = axios.create({
+const instance = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
 });
+
+const api = setupCache(instance);
 
 // Authentication services
 export const authService = {

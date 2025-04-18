@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Table, Button, Space, Modal, Form, Input, message, Upload } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import api from '../services/api.ts';
 import '../styles/Dashboard.css';
 
 interface AlumniData {
@@ -32,16 +33,24 @@ const Dashboard = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [editingAlumni, setEditingAlumni] = useState<AlumniData | null>(null);
   const [form] = Form.useForm();
+  const [search, setSearch] = useState('');
 
-  const fetchAlumni = async () => {
+  // Debounce search input
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      fetchAlumni(search);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  const fetchAlumni = async (searchQuery = '') => {
     setLoading(true);
     try {
-      const response = await axios.get('http://85.202.192.67/api/alumni', {
-        headers: { 
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      const response = await api.get(`http://85.202.192.67/api/alumni${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ''}`,
+        {
+          headers: { 'Accept': 'application/json' }
         }
-      });
+      );
       setAlumni(response.data.data);
     } catch (error) {
       message.error('Failed to fetch alumni data');
@@ -71,9 +80,9 @@ const Dashboard = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://85.202.192.67/api/alumni/${id}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      await api.delete(`http://85.202.192.67/api/alumni/${id}`, {
+        headers: { 
+          'Accept': 'application/json',
         }
       });
       message.success('Alumni deleted successfully');
@@ -110,21 +119,20 @@ const Dashboard = () => {
 
       if (editingAlumni) {
         // For update, we need to use multipart/form-data
-        await axios.put(`http://85.202.192.67/api/alumni/${editingAlumni.id}`, formData, {
+        formData.append('_method', 'PUT');
+        await api.post(`http://85.202.192.67/api/alumni/${editingAlumni.id}`, formData, {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
         message.success('Alumni updated successfully');
       } else {
         // For create, we also use multipart/form-data
-        await axios.post('http://85.202.192.67/api/alumni', formData, {
+        await api.post('http://85.202.192.67/api/alumni', formData, {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
         message.success('Alumni created successfully');
@@ -163,14 +171,14 @@ const Dashboard = () => {
       onFilter: (value: any, record: AlumniData) => record.degree === value,
     },
     {
-      title: 'Current Job',
-      dataIndex: 'current_job',
-      key: 'current_job',
+      title: 'Faculty',
+      dataIndex: 'faculty',
+      key: 'faculty',
     },
     {
-      title: 'Company',
-      dataIndex: 'company',
-      key: 'company',
+      title: 'Major',
+      dataIndex: 'major',
+      key: 'major',
     },
     {
       title: 'Actions',
@@ -203,6 +211,15 @@ const Dashboard = () => {
         <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
           Add Alumni
         </Button>
+      </div>
+      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'flex-start' }}>
+        <Input.Search
+          placeholder="Search by name or email"
+          allowClear
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ width: 300 }}
+        />
       </div>
 
       <Table
