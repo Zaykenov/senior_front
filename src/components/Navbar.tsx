@@ -3,6 +3,7 @@ import '../styles/Navbar.css';
 import nuLogo from '../assets/images/nu_logo.png';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { UserOutlined } from '@ant-design/icons';
 
 
 const Navbar = () => {
@@ -43,7 +44,7 @@ const Navbar = () => {
         <div className="user-menu">
           <Link to="/profile" className="user-avatar">
             <div className="avatar-circle">
-              <span>JD</span>
+              <UserOutlined style={{ fontSize: 24 }} />
             </div>
           </Link>
           <Button onClick={handleLogout} style={{ marginLeft: 16 }}>
