@@ -71,5 +71,13 @@
     "signing_up": "Регистрация...",
     "no_account": "Нет аккаунта?",
     "have_account": "Уже есть аккаунт?",
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "alumni_profile": "Профиль выпускника",
+    "roles": "Роли",
+    "permissions": "Права",
+    "no_roles": "Нет ролей",
+    "no_permissions": "Нет прав",
+    "fetch_profile_error": "Не удалось загрузить данные профиля",
+    "in": "по",
+    "at": "в"
 }

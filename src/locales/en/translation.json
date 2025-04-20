@@ -71,5 +71,13 @@
     "signing_up": "Signing up...",
     "no_account": "Don't have an account?",
     "have_account": "Already have an account?",
-    "logout": "Logout"
+    "logout": "Logout",
+    "alumni_profile": "Alumni Profile",
+    "roles": "Roles",
+    "permissions": "Permissions",
+    "no_roles": "No roles",
+    "no_permissions": "No permissions",
+    "fetch_profile_error": "Failed to load profile data",
+    "in": "in",
+    "at": "at"
 }

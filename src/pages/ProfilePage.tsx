@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Card, Avatar, Typography, Skeleton, Tag, List } from 'antd';
 import { UserOutlined, KeyOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import api from '../services/api.ts';
+import { useTranslation } from 'react-i18next';
 
 
 interface UserData {
@@ -46,6 +47,7 @@ const ProfilePage = () => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -58,7 +60,7 @@ const ProfilePage = () => {
         setProfile(response.data);
         setLoading(false);
       } catch (err) {
-        setError('Failed to load profile data');
+        setError(t('fetch_profile_error'));
         setLoading(false);
       }
     };
@@ -77,7 +79,7 @@ const ProfilePage = () => {
   // Helper to render alumni profile
   const renderAlumniProfile = (alumni: AlumniProfile) => (
     <Card
-      title={<span style={{ fontWeight: 600, fontSize: '1.2rem' }}>Alumni Profile</span>}
+      title={<span style={{ fontWeight: 600, fontSize: '1.2rem' }}>{t('alumni_profile')}</span>}
       style={{
         borderRadius: '12px',
         marginTop: '2rem',
@@ -96,31 +98,33 @@ const ProfilePage = () => {
         </div>
         <div style={{ flex: 1 }}>
           <Typography.Title level={4} style={{ marginBottom: 0 }}>{alumni.full_name}</Typography.Title>
-          <Typography.Text type="secondary">{alumni.degree} in {alumni.major} ({alumni.faculty})</Typography.Text>
+          <Typography.Text type="secondary">{alumni.degree} {t('in')} {alumni.major} ({alumni.faculty})</Typography.Text>
           <div style={{ margin: '1rem 0' }}>
-            <Tag color="blue">Graduation: {alumni.graduation_date}</Tag>
+            <Tag color="blue">{t('graduation_date')}: {alumni.graduation_date.split("T")[0]}</Tag>
             <Tag color="geekblue">{alumni.country}, {alumni.city}</Tag>
           </div>
           <List size="small" style={{ marginBottom: 12 }}>
             <List.Item>
-              <strong>Email:</strong> <span style={{ marginLeft: 8 }}>{alumni.email}</span>
+              <strong>{t('email')}:</strong> <span style={{ marginLeft: 8 }}>{alumni.email}</span>
             </List.Item>
             <List.Item>
-              <strong>Phone:</strong> <span style={{ marginLeft: 8 }}>{alumni.phone}</span>
+              <strong>{t('phone')}:</strong> <span style={{ marginLeft: 8 }}>{alumni.phone}</span>
             </List.Item>
-            <List.Item>
-              <strong>Current Job:</strong> <span style={{ marginLeft: 8 }}>{alumni.current_job} at {alumni.company}</span>
-            </List.Item>
+            {alumni.current_job && (
+              <List.Item>
+                <strong>{t('current_job')}:</strong> <span style={{ marginLeft: 8 }}>{alumni.current_job} {t('at')} {alumni.company}</span>
+              </List.Item>
+            )}
             {alumni.social_links && (
               <List.Item>
-                <strong>Social Links:</strong> <span style={{ marginLeft: 8 }}>{alumni.social_links}</span>
+                <strong>{t('social_links')}:</strong> <span style={{ marginLeft: 8 }}>{alumni.social_links}</span>
               </List.Item>
             )}
           </List>
           {alumni.biography && (
             <div style={{ marginTop: 8 }}>
               <Typography.Paragraph>
-                <strong>Biography:</strong> {alumni.biography}
+                <strong>{t('biography')}:</strong> {alumni.biography}
               </Typography.Paragraph>
             </div>
           )}
@@ -158,13 +162,13 @@ const ProfilePage = () => {
           dataSource={[
             {
               key: 'roles',
-              title: 'Roles',
+              title: t('roles'),
               icon: <KeyOutlined style={{ fontSize: '24px', color: '#1890ff' }} />,
               content: profile?.roles
             },
             {
               key: 'permissions',
-              title: 'Permissions',
+              title: t('permissions'),
               icon: <SafetyCertificateOutlined style={{ fontSize: '24px', color: '#52c41a' }} />,
               content: profile?.permissions
             }
@@ -194,7 +198,7 @@ const ProfilePage = () => {
                               </Tag>
                             ))
                           ) : (
-                            <Typography.Text type="secondary">No {item.title.toLowerCase()}</Typography.Text>
+                            <Typography.Text type="secondary">{t('no_' + item.key)}</Typography.Text>
                           )}
                         </div>
                       )}
