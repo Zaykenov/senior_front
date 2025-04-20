@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
 import nuLogo from '../assets/images/nu_logo.png';
 import { Button } from 'antd';
@@ -7,6 +7,12 @@ import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
 
   return (
     <nav className="navbar">
@@ -40,6 +46,9 @@ const Navbar = () => {
               <span>JD</span>
             </div>
           </Link>
+          <Button onClick={handleLogout} style={{ marginLeft: 16 }}>
+            {t('logout') || 'Logout'}
+          </Button>
         </div>
       </div>
     </nav>

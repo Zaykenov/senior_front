@@ -13,10 +13,33 @@ interface UserData {
   updated_at: string;
 }
 
+interface AlumniProfile {
+  id: string;
+  first_name: string;
+  last_name: string;
+  full_name: string;
+  graduation_date: string;
+  degree: string;
+  faculty: string;
+  major: string;
+  email: string;
+  phone: string;
+  current_job: string;
+  company: string;
+  social_links: string;
+  biography: string;
+  profile_photo: string;
+  country: string;
+  city: string;
+  created_at: string;
+  updated_at: string;
+}
+
 interface ProfileData {
   user: UserData;
   roles: string[];
   permissions: string[];
+  alumni_profile?: AlumniProfile | null;
 }
 
 const ProfilePage = () => {
@@ -30,7 +53,6 @@ const ProfilePage = () => {
         const response = await api.get('http://85.202.192.67/api/profile', {
           headers: {
             'Accept': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
         setProfile(response.data);
@@ -52,6 +74,61 @@ const ProfilePage = () => {
     );
   }
 
+  // Helper to render alumni profile
+  const renderAlumniProfile = (alumni: AlumniProfile) => (
+    <Card
+      title={<span style={{ fontWeight: 600, fontSize: '1.2rem' }}>Alumni Profile</span>}
+      style={{
+        borderRadius: '12px',
+        marginTop: '2rem',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+        background: '#fafcff',
+      }}
+    >
+      <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+        <div>
+          <Avatar
+            size={100}
+            src={alumni.profile_photo || undefined}
+            icon={<UserOutlined />}
+            style={{ backgroundColor: '#e6f7ff', marginBottom: 16 }}
+          />
+        </div>
+        <div style={{ flex: 1 }}>
+          <Typography.Title level={4} style={{ marginBottom: 0 }}>{alumni.full_name}</Typography.Title>
+          <Typography.Text type="secondary">{alumni.degree} in {alumni.major} ({alumni.faculty})</Typography.Text>
+          <div style={{ margin: '1rem 0' }}>
+            <Tag color="blue">Graduation: {alumni.graduation_date}</Tag>
+            <Tag color="geekblue">{alumni.country}, {alumni.city}</Tag>
+          </div>
+          <List size="small" style={{ marginBottom: 12 }}>
+            <List.Item>
+              <strong>Email:</strong> <span style={{ marginLeft: 8 }}>{alumni.email}</span>
+            </List.Item>
+            <List.Item>
+              <strong>Phone:</strong> <span style={{ marginLeft: 8 }}>{alumni.phone}</span>
+            </List.Item>
+            <List.Item>
+              <strong>Current Job:</strong> <span style={{ marginLeft: 8 }}>{alumni.current_job} at {alumni.company}</span>
+            </List.Item>
+            {alumni.social_links && (
+              <List.Item>
+                <strong>Social Links:</strong> <span style={{ marginLeft: 8 }}>{alumni.social_links}</span>
+              </List.Item>
+            )}
+          </List>
+          {alumni.biography && (
+            <div style={{ marginTop: 8 }}>
+              <Typography.Paragraph>
+                <strong>Biography:</strong> {alumni.biography}
+              </Typography.Paragraph>
+            </div>
+          )}
+        </div>
+      </div>
+    </Card>
+  );
+
   return (
     <div className="profile-container" style={{ maxWidth: '800px', margin: '2rem auto', padding: '0 1rem' }}>
       <Card
@@ -69,10 +146,10 @@ const ProfilePage = () => {
             style={{ backgroundColor: '#1890ff' }}
           />
           <Typography.Title level={2} style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>
-            {loading ? <Skeleton.Input style={{ width: 200 }} active size="small" /> : profile?.user.name}
+            {loading ? <Skeleton.Input style={{ width: 200 }} active size="small" /> : (profile?.user.name || '-')}
           </Typography.Title>
           <Typography.Text type="secondary">
-            {profile?.user.email}
+            {/* Email is now in alumni_profile or not available */}
           </Typography.Text>
         </div>
 
@@ -128,6 +205,8 @@ const ProfilePage = () => {
             </List.Item>
           )}
         />
+        {/* Alumni Profile Section */}
+        {!loading && profile?.alumni_profile && renderAlumniProfile(profile.alumni_profile)}
       </Card>
     </div>
   );

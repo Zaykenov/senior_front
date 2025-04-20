@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Table, Button, Space, Modal, Form, Input, message, Upload } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
@@ -36,6 +36,19 @@ const Dashboard = () => {
   const [form] = Form.useForm();
   const [search, setSearch] = useState('');
   const { t } = useTranslation();
+
+  // Permissions from localStorage
+  const [permissions, setPermissions] = useState<string[]>([]);
+  useEffect(() => {
+    const perms = localStorage.getItem('permissions');
+    if (perms) {
+      try {
+        setPermissions(JSON.parse(perms));
+      } catch {
+        setPermissions([]);
+      }
+    }
+  }, []);
 
   // Debounce search input
   useEffect(() => {
@@ -119,6 +132,9 @@ const Dashboard = () => {
         }
       });
 
+      formData.append('password', 'qwerty123');
+      formData.append('password_confirmation', 'qwerty123');
+
       if (editingAlumni) {
         // For update, we need to use multipart/form-data
         formData.append('_method', 'PUT');
@@ -150,7 +166,7 @@ const Dashboard = () => {
     }
   };
 
-  const columns = [
+  const columns = useMemo(() => ([
     {
       title: t('full_name'),
       dataIndex: 'full_name',
@@ -182,37 +198,43 @@ const Dashboard = () => {
       dataIndex: 'major',
       key: 'major',
     },
-    {
+    (permissions.includes('alumni:edit') || permissions.includes('alumni:delete')) ? {
       title: t('actions'),
       key: 'actions',
       render: (_: any, record: AlumniData) => (
         <Space>
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          >
-            {t('edit_alumni')}
-          </Button>
-          <Button
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.id)}
-          >
-            {t('delete')}
-          </Button>
+          {permissions.includes('alumni:edit') && (
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => handleEdit(record)}
+            >
+              {t('edit_alumni')}
+            </Button>
+          )}
+          {permissions.includes('alumni:delete') && (
+            <Button
+              danger
+              icon={<DeleteOutlined />}
+              onClick={() => handleDelete(record.id)}
+            >
+              {t('delete')}
+            </Button>
+          )}
         </Space>
       ),
-    },
-  ];
+    } : undefined,
+  ].filter(Boolean) as any), [alumni, t, permissions]);
 
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
         <h1>{t('alumni_management')}</h1>
-        <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
-          {t('add_alumni')}
-        </Button>
+        {permissions.includes('alumni:create') && (
+          <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
+            {t('add_alumni')}
+          </Button>
+        )}
       </div>
       <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'flex-start' }}>
         <Input.Search

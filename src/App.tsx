@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import type { ReactNode } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
@@ -9,6 +11,18 @@ import Footer from './components/Footer';
 import './styles/Auth.css';
 import './i18n';
 
+// Helper to check authentication
+const isAuthenticated = () => !!localStorage.getItem('token');
+
+// PrivateRoute component
+function PrivateRoute({ children }: { children: ReactNode }) {
+  const location = useLocation();
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+  return children;
+}
+
 function App() {
   return (
     <Router>
@@ -16,11 +30,25 @@ function App() {
         <Navbar />
         <main style={{ flex: 1 }}>
           <Routes>
-            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/" element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            } />
+            <Route path="/dashboard" element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            } />
+            <Route path="/profile" element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            } />
+            {/* Redirect all other routes to login if not authenticated */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </main>
         <Footer />

@@ -21,7 +21,7 @@
     "contact": "Contact",
     "phone": "Phone",
     "address": "53 Kabanbay Batyr Ave",
-    "city": "Astana, Kazakhstan",
+    "city_nu": "Astana, Kazakhstan",
     "footer_bottom": "© {{currentYear}} Nazarbayev University. All rights reserved.",
     "first_name": "First Name",
     "last_name": "Last Name",
@@ -39,6 +39,7 @@
     "company_max": "Company name cannot exceed 255 characters",
     "country": "Country",
     "country_max": "Country name cannot exceed 100 characters",
+    "city": "City",
     "city_max": "City name cannot exceed 100 characters",
     "biography": "Biography",
     "social_links": "Social Links",
@@ -69,5 +70,6 @@
     "signing_in": "Signing in...",
     "signing_up": "Signing up...",
     "no_account": "Don't have an account?",
-    "have_account": "Already have an account?"
+    "have_account": "Already have an account?",
+    "logout": "Logout"
 }

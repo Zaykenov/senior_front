@@ -31,7 +31,7 @@ const Footer = () => {
           <ul className="footer-links">
             <li>{t('email')}: nu@nu.edu.kz</li>
             <li>{t('phone')}: 8 (7172) 70-66-88</li>
-            <li>{t('address')},<br />{t('city')}</li>
+            <li>{t('address')},<br />{t('city_nu')}</li>
           </ul>
         </div>
       </div>
