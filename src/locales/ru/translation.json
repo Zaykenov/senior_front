@@ -79,5 +79,20 @@
     "no_permissions": "Нет прав",
     "fetch_profile_error": "Не удалось загрузить данные профиля",
     "in": "по",
-    "at": "в"
+    "at": "в",
+    "change_password": "Изменить пароль",
+    "cancel": "Отмена",
+    "submit": "Отправить",
+    "current_password": "Текущий пароль",
+    "new_password": "Новый пароль",
+    "confirm_new_password": "Подтвердите новый пароль",
+    "please_input_current_password": "Пожалуйста, введите ваш текущий пароль!",
+    "please_input_new_password": "Пожалуйста, введите ваш новый пароль!",
+    "password_min_8_chars": "Пароль должен содержать не менее 8 символов!",
+    "please_confirm_new_password": "Пожалуйста, подтвердите ваш новый пароль!",
+    "passwords_do_not_match": "Введенные пароли не совпадают!",
+    "password_changed_successfully": "Пароль успешно изменен",
+    "change_password_failed": "Не удалось изменить пароль. Пожалуйста, попробуйте еще раз.",
+    "change_password_validation_error": "Пожалуйста, проверьте форму на наличие ошибок.",
+    "incorrect_current_password": "Неверный текущий пароль."
 }

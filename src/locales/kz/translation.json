@@ -79,5 +79,20 @@
     "no_permissions": "Рұқсаттар жоқ",
     "fetch_profile_error": "Профиль деректерін жүктеу сәтсіз аяқталды",
     "in": "мамандығы",
-    "at": "жұмыс орны"
+    "at": "жұмыс орны",
+    "change_password": "Құпиясөзді өзгерту",
+    "cancel": "Болдырмау",
+    "submit": "Жіберу",
+    "current_password": "Ағымдағы құпиясөз",
+    "new_password": "Жаңа құпиясөз",
+    "confirm_new_password": "Жаңа құпиясөзді растау",
+    "please_input_current_password": "Ағымдағы құпиясөзіңізді енгізіңіз!",
+    "please_input_new_password": "Жаңа құпиясөзіңізді енгізіңіз!",
+    "password_min_8_chars": "Құпиясөз кемінде 8 таңбадан тұруы керек!",
+    "please_confirm_new_password": "Жаңа құпиясөзіңізді растаңыз!",
+    "passwords_do_not_match": "Енгізілген екі құпиясөз сәйкес келмейді!",
+    "password_changed_successfully": "Құпиясөз сәтті өзгертілді",
+    "change_password_failed": "Құпиясөзді өзгерту сәтсіз аяқталды. Қайталап көріңіз.",
+    "change_password_validation_error": "Формада қателер бар-жоғын тексеріңіз.",
+    "incorrect_current_password": "Ағымдағы құпиясөз қате."
 }

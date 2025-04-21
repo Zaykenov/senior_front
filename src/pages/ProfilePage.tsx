@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Card, Avatar, Typography, Skeleton, Tag, List } from 'antd';
+import { Card, Avatar, Typography, Skeleton, Tag, List, Button, Modal, Form, Input, message } from 'antd';
 import { UserOutlined, KeyOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import api from '../services/api.ts';
 import { useTranslation } from 'react-i18next';
-
 
 interface UserData {
   id: number;
@@ -47,6 +46,9 @@ const ProfilePage = () => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [form] = Form.useForm();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -67,6 +69,39 @@ const ProfilePage = () => {
 
     fetchProfile();
   }, []);
+
+  const showChangePasswordModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    form.resetFields();
+  };
+
+  const handleChangePassword = async (values: any) => {
+    setIsSubmitting(true);
+    try {
+      const response = await api.post('/change-password', values);
+      message.success(response.data.message || t('password_changed_successfully'));
+      setIsModalVisible(false);
+      form.resetFields();
+    } catch (err: any) {
+      // Handle specific validation errors if available
+      if (err.response && err.response.status === 422 && err.response.data.errors) {
+        const errorMessages = Object.values(err.response.data.errors).flat().join(' ');
+        message.error(errorMessages || t('change_password_validation_error'));
+      } else if (err.response && err.response.status === 401) {
+         message.error(err.response.data.message || t('incorrect_current_password'));
+      }
+       else {
+        message.error(t('change_password_failed'));
+      }
+      console.error("Password change failed:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (error) {
     return (
@@ -142,6 +177,11 @@ const ProfilePage = () => {
           borderRadius: '12px',
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
         }}
+        actions={[
+          <Button key="change-password" type="primary" onClick={showChangePasswordModal}>
+            {t('change_password')}
+          </Button>
+        ]}
       >
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <Avatar
@@ -212,8 +252,68 @@ const ProfilePage = () => {
         {/* Alumni Profile Section */}
         {!loading && profile?.alumni_profile && renderAlumniProfile(profile.alumni_profile)}
       </Card>
+
+      {/* Change Password Modal */}
+      <Modal
+        title={t('change_password')}
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            {t('cancel')}
+          </Button>,
+          <Button key="submit" type="primary" loading={isSubmitting} onClick={() => form.submit()}>
+            {t('submit')}
+          </Button>,
+        ]}
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={handleChangePassword}
+          name="change_password_form"
+        >
+          <Form.Item
+            name="current_password"
+            label={t('current_password')}
+            rules={[{ required: true, message: t('please_input_current_password') }]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            name="new_password"
+            label={t('new_password')}
+            rules={[
+              { required: true, message: t('please_input_new_password') },
+              { min: 8, message: t('password_min_8_chars') } // Example minimum length
+            ]}
+            hasFeedback
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            name="new_password_confirmation"
+            label={t('confirm_new_password')}
+            dependencies={['new_password']}
+            hasFeedback
+            rules={[
+              { required: true, message: t('please_confirm_new_password') },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('new_password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error(t('passwords_do_not_match')));
+                },
+              }),
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };
 
-export default ProfilePage; 
+export default ProfilePage;

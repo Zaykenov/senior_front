@@ -79,5 +79,20 @@
     "no_permissions": "No permissions",
     "fetch_profile_error": "Failed to load profile data",
     "in": "in",
-    "at": "at"
+    "at": "at",
+    "change_password": "Change Password",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "current_password": "Current Password",
+    "new_password": "New Password",
+    "confirm_new_password": "Confirm New Password",
+    "please_input_current_password": "Please input your current password!",
+    "please_input_new_password": "Please input your new password!",
+    "password_min_8_chars": "Password must be at least 8 characters!",
+    "please_confirm_new_password": "Please confirm your new password!",
+    "passwords_do_not_match": "The two passwords that you entered do not match!",
+    "password_changed_successfully": "Password changed successfully",
+    "change_password_failed": "Failed to change password. Please try again.",
+    "change_password_validation_error": "Please check the form for errors.",
+    "incorrect_current_password": "Incorrect current password."
 }
