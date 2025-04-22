@@ -54,7 +54,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await api.get('http://85.202.192.67/api/profile', {
+        const response = await api.get('/profile', {
           headers: {
             'Accept': 'application/json',
           }

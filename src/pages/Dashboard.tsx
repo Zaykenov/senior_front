@@ -61,7 +61,7 @@ const Dashboard = () => {
   const fetchAlumni = async (searchQuery = '') => {
     setLoading(true);
     try {
-      const response = await api.get(`http://85.202.192.67/api/alumni${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ''}`,
+      const response = await api.get(`/alumni${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ''}`,
         {
           headers: { 'Accept': 'application/json' }
         }
@@ -95,7 +95,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await api.delete(`http://85.202.192.67/api/alumni/${id}`, {
+      await api.delete(`/alumni/${id}`, {
         headers: { 
           'Accept': 'application/json',
         }
@@ -138,7 +138,7 @@ const Dashboard = () => {
       if (editingAlumni) {
         // For update, we need to use multipart/form-data
         formData.append('_method', 'PUT');
-        await api.post(`http://85.202.192.67/api/alumni/${editingAlumni.id}`, formData, {
+        await api.post(`/alumni/${editingAlumni.id}`, formData, {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
@@ -147,7 +147,7 @@ const Dashboard = () => {
         message.success(t('alumni_updated'));
       } else {
         // For create, we also use multipart/form-data
-        await api.post('http://85.202.192.67/api/alumni', formData, {
+        await api.post('/alumni', formData, {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
