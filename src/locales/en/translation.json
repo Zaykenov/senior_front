@@ -94,5 +94,6 @@
     "password_changed_successfully": "Password changed successfully",
     "change_password_failed": "Failed to change password. Please try again.",
     "change_password_validation_error": "Please check the form for errors.",
-    "incorrect_current_password": "Incorrect current password."
+    "incorrect_current_password": "Incorrect current password.",
+    "edit_profile": "Edit profile"
 }

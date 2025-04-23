@@ -94,5 +94,6 @@
     "password_changed_successfully": "Құпиясөз сәтті өзгертілді",
     "change_password_failed": "Құпиясөзді өзгерту сәтсіз аяқталды. Қайталап көріңіз.",
     "change_password_validation_error": "Формада қателер бар-жоғын тексеріңіз.",
-    "incorrect_current_password": "Ағымдағы құпиясөз қате."
+    "incorrect_current_password": "Ағымдағы құпиясөз қате.",
+    "edit_profile": "Профильді өзгерту"
 }
