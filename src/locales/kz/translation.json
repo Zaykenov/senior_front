@@ -95,5 +95,9 @@
     "change_password_failed": "Құпиясөзді өзгерту сәтсіз аяқталды. Қайталап көріңіз.",
     "change_password_validation_error": "Формада қателер бар-жоғын тексеріңіз.",
     "incorrect_current_password": "Ағымдағы құпиясөз қате.",
-    "edit_profile": "Профильді өзгерту"
+    "edit_profile": "Профильді өзгерту",
+    "users": "Қолданушылар",
+    "message": "Хабарлама",
+    "chat": "Чат",
+    "fetch_users_error": "Қолданушыларды жүктеу сәтсіз аяқталды"
 }

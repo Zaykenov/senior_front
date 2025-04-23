@@ -95,5 +95,9 @@
     "change_password_failed": "Failed to change password. Please try again.",
     "change_password_validation_error": "Please check the form for errors.",
     "incorrect_current_password": "Incorrect current password.",
-    "edit_profile": "Edit profile"
+    "edit_profile": "Edit profile",
+    "users": "Users",
+    "message": "Message",
+    "chat": "Chat",
+    "fetch_users_error": "Failed to load users"
 }

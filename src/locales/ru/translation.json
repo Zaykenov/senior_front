@@ -95,5 +95,9 @@
     "change_password_failed": "Не удалось изменить пароль. Пожалуйста, попробуйте еще раз.",
     "change_password_validation_error": "Пожалуйста, проверьте форму на наличие ошибок.",
     "incorrect_current_password": "Неверный текущий пароль.",
-    "edit_profile": "Изменить профиль"
+    "edit_profile": "Изменить профиль",
+    "users": "Пользователи",
+    "message": "Написать",
+    "chat": "Чат",
+    "fetch_users_error": "Не удалось загрузить пользователей"
 }

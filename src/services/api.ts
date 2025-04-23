@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
 
-const API_URL = '/api'; // As per API docs
+const API_URL = 'http://localhost/api'; // As per API docs
 
 // Create axios instance
 const instance = axios.create({

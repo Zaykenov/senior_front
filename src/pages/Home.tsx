@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +9,12 @@ const ResourcesIcon = () => <div className="feature-icon">📚</div>;
 
 const Home = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  
+  const handleCardClick = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <div className="home-container">
       <main className="home-main">
@@ -17,7 +23,10 @@ const Home = () => {
           <p className="home-subtitle">{t('home_subtitle')}</p>
           
           <div className="cards-container">
-            <div className="feature-card">
+            <div 
+              className="feature-card clickable-card" 
+              onClick={() => handleCardClick('/chat')}
+            >
               <NetworkIcon />
               <h3 className="feature-title">{t('connect_network_title')}</h3>
               <p className="feature-description">
@@ -53,4 +62,4 @@ const Home = () => {
   );
 };
 
-export default Home; 
+export default Home;

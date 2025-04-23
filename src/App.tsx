@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import ProfilePage from './pages/ProfilePage';
+import Chat from './pages/Chat';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './styles/Auth.css';
@@ -44,6 +45,11 @@ function App() {
             <Route path="/profile" element={
               <PrivateRoute>
                 <ProfilePage />
+              </PrivateRoute>
+            } />
+            <Route path="/chat" element={
+              <PrivateRoute>
+                <Chat />
               </PrivateRoute>
             } />
             {/* Redirect all other routes to login if not authenticated */}
