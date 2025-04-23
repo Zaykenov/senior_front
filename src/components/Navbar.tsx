@@ -21,15 +21,7 @@ const Navbar = () => {
         <Link to="/" className="logo-container">
           <img src={nuLogo} alt="Nazarbayev University Logo" className="logo" />
         </Link>
-
-        <div>
-          <Button onClick={() => i18n.changeLanguage('en')}>EN</Button>
-          <Button onClick={() => i18n.changeLanguage('ru')}>RU</Button>
-          <Button onClick={() => i18n.changeLanguage('kz')}>KZ</Button>
-        </div>
-      </div>
-      
-      <div className="navbar-center">
+        
         <ul className="nav-links">
           <li>
             <Link to="/" className="nav-link">{t('main_page')}</Link>
@@ -40,7 +32,16 @@ const Navbar = () => {
         </ul>
       </div>
       
+      <div className="navbar-center">
+        
+      </div>
+      
       <div className="navbar-right">
+        <div className="language-buttons">
+          <Button onClick={() => i18n.changeLanguage('en')}>EN</Button>
+          <Button onClick={() => i18n.changeLanguage('ru')}>RU</Button>
+          <Button onClick={() => i18n.changeLanguage('kz')}>KZ</Button>
+        </div>
         <div className="user-menu">
           <Link to="/profile" className="user-avatar">
             <div className="avatar-circle">
