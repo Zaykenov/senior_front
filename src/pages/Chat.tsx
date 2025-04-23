@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { List, Avatar, Typography, Divider } from 'antd';
+import { List, Avatar, Typography, Divider, Tabs } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import api from '../services/api';
 import '../styles/Chat.css';
 import { useTranslation } from 'react-i18next';
+import WebSocketTester from '../components/WebSocketTester';
 
 interface User {
   id: number;
@@ -11,6 +12,8 @@ interface User {
   email: string;
   profile_photo?: string;
 }
+
+const { TabPane } = Tabs;
 
 const Chat = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -52,44 +55,52 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">
-        <Typography.Title level={2}>{t('users')}</Typography.Title>
-      </div>
+      <Tabs defaultActiveKey="users">
+        <TabPane tab={t('users')} key="users">
+          <div className="chat-header">
+            <Typography.Title level={2}>{t('users')}</Typography.Title>
+          </div>
 
-      <Divider />
-      
-      {error ? (
-        <div className="error-message">{error}</div>
-      ) : (
-        <List
-          loading={loading}
-          itemLayout="horizontal"
-          dataSource={users}
-          renderItem={(user) => (
-            <List.Item 
-              className="user-list-item"
-              key={user.id}
-            >
-              <List.Item.Meta
-                avatar={
-                  <Avatar 
-                    src={user.profile_photo} 
-                    icon={<UserOutlined />} 
-                    size={48}
+          <Divider />
+          
+          {error ? (
+            <div className="error-message">{error}</div>
+          ) : (
+            <List
+              loading={loading}
+              itemLayout="horizontal"
+              dataSource={users}
+              renderItem={(user) => (
+                <List.Item 
+                  className="user-list-item"
+                  key={user.id}
+                >
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar 
+                        src={user.profile_photo} 
+                        icon={<UserOutlined />} 
+                        size={48}
+                      />
+                    }
+                    title={<span className="user-name">{user.name}</span>}
+                    description={user.email}
                   />
-                }
-                title={<span className="user-name">{user.name}</span>}
-                description={user.email}
-              />
-              <div>
-                <button className="chat-button">
-                  {t('message')}
-                </button>
-              </div>
-            </List.Item>
+                  <div>
+                    <button className="chat-button">
+                      {t('message')}
+                    </button>
+                  </div>
+                </List.Item>
+              )}
+            />
           )}
-        />
-      )}
+        </TabPane>
+        
+        <TabPane tab="WebSocket Debug" key="websocket">
+          <WebSocketTester />
+        </TabPane>
+      </Tabs>
     </div>
   );
 };
