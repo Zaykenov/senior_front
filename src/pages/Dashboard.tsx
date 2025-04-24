@@ -39,13 +39,24 @@ const Dashboard = () => {
 
   // Permissions from localStorage
   const [permissions, setPermissions] = useState<string[]>([]);
+  const [roles, setRoles] = useState<string[]>([]);
+
   useEffect(() => {
     const perms = localStorage.getItem('permissions');
+    const rls = localStorage.getItem('roles');
     if (perms) {
       try {
         setPermissions(JSON.parse(perms));
       } catch {
         setPermissions([]);
+      }
+    }
+
+    if (rls) {
+      try {
+        setRoles(JSON.parse(rls));
+      } catch {
+        setRoles([]);
       }
     }
   }, []);
@@ -198,7 +209,7 @@ const Dashboard = () => {
       dataIndex: 'major',
       key: 'major',
     },
-    (permissions.includes('alumni:edit') || permissions.includes('alumni:delete')) ? {
+    (roles.includes('admin')) ? {
       title: t('actions'),
       key: 'actions',
       render: (_: any, record: AlumniData) => (
