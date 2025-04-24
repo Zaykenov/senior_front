@@ -5,7 +5,6 @@ import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { UserOutlined } from '@ant-design/icons';
 
-
 const Navbar = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -28,6 +27,9 @@ const Navbar = () => {
           </li>
           <li>
             <Link to="/dashboard" className="nav-link">{t('dashboard')}</Link>
+          </li>
+          <li>
+            <Link to="/events" className='nav-link'>{t('events')}</Link>
           </li>
         </ul>
       </div>

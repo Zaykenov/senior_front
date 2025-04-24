@@ -44,4 +44,21 @@ api.interceptors.request.use(
   }
 );
 
+// Event Services
+export const eventService = {
+  // Admin routes
+  getAdminEvents: () => api.get('/admin/events'),
+  createEvent: (data: any) => api.post('/events', data),
+  updateEvent: (id: string, data: any) => api.put(`/events/${id}`, data),
+  deleteEvent: (id: string) => api.delete(`/events/${id}`),
+  getEventAttendees: (id: string) => api.get(`/events/${id}/attendees`),
+
+  // Alumni routes
+  getEvents: () => api.get('/events'),
+  getEvent: (id: string) => api.get(`/events/${id}`),
+  registerForEvent: (id: string) => api.post(`/events/${id}/register`),
+  cancelEventRegistration: (id: string) => api.delete(`/events/${id}/register`),
+  getMyEvents: () => api.get('/my-events'),
+};
+
 export default api; 

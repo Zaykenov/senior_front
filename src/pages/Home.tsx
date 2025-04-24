@@ -25,13 +25,15 @@ const Home = () => {
               </p>
             </div>
             
-            <div className="feature-card">
-              <EventsIcon />
-              <h3 className="feature-title">{t('events_meetups_title')}</h3>
-              <p className="feature-description">
-                {t('events_meetups_desc')}
-              </p>
-            </div>
+            <Link to="/events" className="feature-card-link">
+              <div className="feature-card">
+                <EventsIcon />
+                <h3 className="feature-title">{t('events_meetups_title')}</h3>
+                <p className="feature-description">
+                  {t('events_meetups_desc')}
+                </p>
+              </div>
+            </Link>
             
             <div className="feature-card">
               <ResourcesIcon />

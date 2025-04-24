@@ -1,0 +1,19 @@
+.my-events-page-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.my-events-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.my-events-page-container h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Add more specific styles as needed */ 
