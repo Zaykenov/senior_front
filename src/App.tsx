@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './styles/Auth.css';
 import './i18n';
+import { AuthProvider } from './contexts/AuthContext';
 
 // Helper to check authentication
 const isAuthenticated = () => !!localStorage.getItem('token');
@@ -25,40 +26,42 @@ function PrivateRoute({ children }: { children: ReactNode }) {
 
 function App() {
   return (
-    <Router>
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <Navbar />
-        <main style={{ flex: 1 }}>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/" element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            } />
-            <Route path="/dashboard" element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            } />
-            <Route path="/profile" element={
-              <PrivateRoute>
-                <ProfilePage />
-              </PrivateRoute>
-            } />
-            <Route path="/chat" element={
-              <PrivateRoute>
-                <Chat />
-              </PrivateRoute>
-            } />
-            {/* Redirect all other routes to login if not authenticated */}
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <Navbar />
+          <main style={{ flex: 1 }}>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/" element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              } />
+              <Route path="/dashboard" element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              } />
+              <Route path="/profile" element={
+                <PrivateRoute>
+                  <ProfilePage />
+                </PrivateRoute>
+              } />
+              <Route path="/chat" element={
+                <PrivateRoute>
+                  <Chat />
+                </PrivateRoute>
+              } />
+              {/* Redirect all other routes to login if not authenticated */}
+              <Route path="*" element={<Navigate to="/login" replace />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
