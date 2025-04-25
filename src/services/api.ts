@@ -10,6 +10,7 @@ const instance = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
+  withCredentials: true
 });
 
 const api = setupCache(instance);
@@ -60,5 +61,26 @@ export const eventService = {
   cancelEventRegistration: (id: string) => api.delete(`/events/${id}/register`),
   getMyEvents: () => api.get('/my-events'),
 };
+
+export const getUsers = () => api.get('/users');
+
+export const getMessages = async (userId: number) => {
+  try {
+    return await api.get(`/messages/${userId}`);
+  } catch (error) {
+    console.error(`Failed to fetch messages for user ${userId}:`, error);
+    throw error;
+  }
+};
+
+export const sendMessage = async (userId: number, message: string) => {
+  try {
+    return await api.post(`/messages/${userId}`, { message });
+  } catch (error) {
+    console.error(`Failed to send message to user ${userId}:`, error);
+    throw error;
+  }
+};
+
 
 export default api; 

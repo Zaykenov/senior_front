@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import ProfilePage from './pages/ProfilePage';
+import Chat from './pages/Chat';
 import EventsPage from './pages/EventsPage';
 import EventDetailPage from './pages/EventDetailPage';
 import MyEventsPage from './pages/MyEventsPage';
@@ -73,6 +74,11 @@ function App() {
             <Route path="/events" element={<PrivateRoute><EventsPage /></PrivateRoute>} />
             <Route path="/events/:id" element={<PrivateRoute><EventDetailPage /></PrivateRoute>} />
             <Route path="/my-events" element={<PrivateRoute><MyEventsPage /></PrivateRoute>} />
+            <Route path="/chat" element={
+                <PrivateRoute>
+                  <Chat />
+                </PrivateRoute>
+              } />
 
             {/* Admin Routes */}
             <Route path="/admin/events" element={

@@ -170,5 +170,10 @@
     
     "fetch_my_events_error": "Failed to fetch your registered events",
     "my_registered_events": "My Registered Events",
-    "no_registered_events": "You haven't registered for any events yet"
+    "no_registered_events": "You haven't registered for any events yet",
+
+    "users": "Users",
+    "message": "Message",
+    "chat": "Chat",
+    "fetch_users_error": "Failed to load users"
 }
